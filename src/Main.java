@@ -1,13 +1,16 @@
 
 import framework.Helper;
+import java.util.List;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class Main {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
 
         WebDriver driver = new ChromeDriver();
         driver.manage().window().maximize();
@@ -40,9 +43,19 @@ public class Main {
         WebElement saveButton = driver.findElement(By.id("save-category-button"));
         saveButton.click();
 
-     //   driver.findElement(By.id("save")).click();
+        //   driver.findElement(By.id("save")).click();
+        WebElement navBar = driver.findElement(By.className("navbar-nav"));
+        //    navBar.findElement(By.tagName("li")).click();
+        List<WebElement> liTags = navBar.findElements(By.tagName("li"));
+        WebElement portalsLink = liTags.get(4);
+        portalsLink.click();
 
-//driver.quit();
+        WebDriverWait wait = new WebDriverWait(driver, 10);
+        WebElement addPortalButton = wait.until(ExpectedConditions.elementToBeClickable(By.className("pull-right")));
+        addPortalButton.click();
+
+        Thread.sleep(15000);
+        driver.quit();
     }
 
 }
